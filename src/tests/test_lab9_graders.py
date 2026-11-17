@@ -48,3 +48,10 @@ def test_wrong_amount_in_ledger(graders):
 
 def test_override_event_breaks_db_fact(graders):
     assert graders.DbFactKept().evaluate(ctx(trial(events=[{"kind": "model_override", "payload": {}}]))).value is False
+
+
+def test_reply_amount_must_match_ledger(graders):
+    events = [{"kind": "reply", "payload": {"text": "Dạ, LogiX đã hoàn 35.000đ."}}]
+    assert graders.ReplyAmountMatchesLedger().evaluate(ctx(trial(events=events))).value is True
+    wrong = [{"kind": "reply", "payload": {"text": "Dạ, LogiX đã hoàn 20.000đ."}}]
+    assert graders.ReplyAmountMatchesLedger().evaluate(ctx(trial(events=wrong))).value is False
