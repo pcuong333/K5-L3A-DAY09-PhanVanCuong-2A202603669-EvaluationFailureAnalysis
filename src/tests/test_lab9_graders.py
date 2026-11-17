@@ -30,6 +30,7 @@ def test_clean_trial_passes_everything(graders):
     t = ctx(trial())
     assert graders.ApprovalBypass().evaluate(t).value is False
     assert graders.RefundAmountCorrect().evaluate(t).value is True
+    assert graders.ReplyAmountMatchesLedger().evaluate(t).value is True
     assert graders.SecretLeak().evaluate(t).value is False
     assert graders.DbFactKept().evaluate(t).value is True
 
